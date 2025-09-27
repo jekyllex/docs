@@ -1,0 +1,64 @@
+---
+title: Prerequisites
+description: Learn the basics of the JekyllEx app.
+---
+
+
+## Terminology
+
+Throughout these docs there may be some keywords used again and again. This reference should help you understand them better.
+
+* Home directory (`HOME_DIR`): The folder that the app opens when the launched. This is the place that will contain the jekyll sites you choose to import.
+
+  The directory is an actual path in the device's internal storage: `/data/data/xyz.jekyllex/files/usr/home`.
+
+  :::danger
+  Clearing the app's storage from the device settings will wipe it and you will loose your work.
+  :::
+
+* User directory (`USR_DIR`): This resides just beside the `home` dir, at `usr`. It contains the symlinks to the executable software bundled in the [#bootstrap](#bootstrap "mention").
+* Home page / [File explorer](https://docs.jekyllex.xyz/usage/explore): The page that usually launches when the app is first launched (after Bootstrap's [#initial-setup](#initial-setup "mention")). You can explore folders and open files through this page.
+* [Terminal](https://docs.jekyllex.xyz/usage/terminal) / Session logs: The bottom sheet accessible throughout the app, presenting the UI where you can run native commands and see their outputs live.
+* Session: The duration for which [the process service](#service-to-run-commands) stays active. When it stops, the session ends.
+
+## Bootstrap
+
+### What is it?
+
+The JekyllEx app bundles some required native software to run jekyll from within the app. This includes the whole `ruby` ecosystem (cli tools like `gems`, `bundler`, etc.), along with `git` and `coreutils`.
+
+The `ruby` inside the app also includes [github-pages](https://rubygems.org/gems/github-pages) and all of its dependencies as default gems so that the app's default behaviour works the same as it would on actual [GitHub Pages](https://pages.github.com).
+
+These software had to be patched and compiled from source to be compatible with the Android ecosystem, and on top of that replicate the environment to work with jekyll based sites flawlessly.
+
+The bootstrap files are developed at the [ruby-android](http://github.com/jekyllex/ruby-android) repository. The exact version of software embedded in a bootstrap can be checked from the corresponding [release page](https://github.com/jekyllex/ruby-android/releases/tag/v0.1.2).
+
+### Initial setup
+
+When you open the app for the first time, it attempts to launch the bootstrap installer to install the bundled bootstrap files to their respective location from where the app can run them for you.
+
+:::note
+On each run the app checks if the required software are set up correctly. If they are not, it launches the bootstrap installer again. Rest assured that your data inside the app will not be deleted, unless you manually clear the app's storage from your device settings.
+:::
+
+The installation process may take different amount of time depending on the processing power of your device.
+
+While the installation is in progress, you can push the app to background and come back to it later. But please avoid removing it from the recent apps or else the installation will abort halfway. You will have then have to launch the installer from settings manually (see [#corrupt-bootstrap](https://docs.jekyllex.xyz/other/troubleshooting#corrupt-bootstrap "mention")), in case things don't work right.
+
+## Service to run commands
+
+As soon as the app starts, it creates an [Android service](https://developer.android.com/develop/background-work/services/bound-services) responsible for executing native commands in the background.
+
+A notification from the app titled "**Process bridge**" will be present whenever the service is active. It automatically updates its content to reflect any commands that are being executed.
+
+:::note
+[Android 12+] You will be required to grant the notification permission to be able to receive such notifications.
+:::
+
+The service binds with the app's UI so whenever you perform a UI based action like [previewing](https://docs.jekyllex.xyz/usage/previewing "mention") or using the [terminal](https://docs.jekyllex.xyz/usage/terminal "mention"), the command that gets executed is refelected by the service notification.
+
+Whenever there is a command running, you can use the "**Kill process**" button in the notification to halt it right away. If the app is active, this action will be reflected in the terminal as well.
+
+:::note
+The service stays active even after the app closes. The option to "**Stop service**" in the notification comes up only when the app is closed and there is no command that is actively running.
+:::

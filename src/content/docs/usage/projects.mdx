@@ -1,0 +1,51 @@
+---
+title: Projects
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The home page of the app is like the desktop folder on your computer. This place is meant to view / create / import your Jekyll projects.
+
+:::note
+A Jekyll projects is just a folder that contains content that adheres to Jekyll's [directory structure](https://jekyllrb.com/docs/structure/).
+:::
+
+As soon as the app loads, it will show the projects that are loaded.
+
+If you've just begun using the app, you will see a "**Create**" button to generate a "**test**" project with the jekyll starter template.
+
+For existing projects, JekyllEx will render additional details regarding your project like the site title, description, size on disk, etc., if possible. It does so by reading the `_config.yml` file inside the project.
+
+## Create / import projects
+
+Press the "**+**" icon on the top right of the app bar. This will open a dialog where you can both create and import jekyll projects.
+
+* Typing a **Name** will create a new jekyll blog with the default starter template in the folder with the the same same.
+* Typing a valid **URL** will try to clone the repository at the URL using `git`.
+* Typing a `git` **command** will execute it as it is.
+
+:::note
+If you are trying to import a private GitHub repository, you will first need to set up [authentication with GitHub](https://docs.jekyllex.xyz/settings#authentication).
+:::
+
+As soon as the action is complete, the dialog closes and the list refereshes to show the latest projects and info possible.
+
+You may create empty folders in the home directory using commands like `mkdir` from the [terminal](https://docs.jekyllex.xyz/usage/terminal "mention"). In such a case, you will need to refresh the list manually from the "**⋮**" dropdown menu.
+
+Even though you can use `touch` or `curl` to create files, the home page will only list the folders present there.
+
+:::note
+**Note:** If you want to be able to [preview](https://docs.jekyllex.xyz/usage/previewing) your jekyll site, it must be at the home directory. Please use `mv` in the terminal to move at the top level if it is in a sub-directory.
+:::
+
+## Install dependencies
+
+This step is required to prepare your new project for [previewing](https://docs.jekyllex.xyz/usage/previewing "mention") locally.
+
+If you created a new project from within the app, unless the [#skip-bundle-install](https://docs.jekyllex.xyz/settings#skip-bundle-install "mention") setting is enabled, jekyll will automatically do this for you. If not, please continue reading.
+
+After importing a project, all you need to do is navigate inside it and press the "**bundle install**" option from the "**⋮**" menu on the top right and bundler will try to resolve and set up the required dependencies. You can view it's progress live from the terminal.
+
+Dependency installation can be prone to errors, but most can be overcome. Please see the [troubleshooting](https://docs.jekyllex.xyz/other/troubleshooting "mention") guide for help with common issues.

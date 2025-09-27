@@ -1,0 +1,54 @@
+---
+title: Previewing
+sidebar:
+  order: 4
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The core feature of the JekyllEx app is the ability to preview your jekyll site on device before pushing it to your version control / deployment platform.
+
+JekyllEx features a feature rich previewer right besides the Editor.
+
+## Start the server
+
+Unless the jekyll server is running, you can't preview your project. Jekyll can serve your site with a wide range of [serve command options](https://jekyllrb.com/docs/configuration/options/#serve-command-options).
+
+:::note
+You need to [install the dependencies](https://docs.jekyllex.xyz/projects#install-dependencies) for your project before continuing.
+:::
+
+You can start the server both using the:
+
+* UI: The "**▶**" button on as well as "Start server" in the "**⋮**" dropdown menu.
+* Terminal: a valid jekyll command other than just `jekyll serve`.
+
+JekyllEx reserves the `jekyll serve` command to build one that suits your needs. You can customize it under the [jekyll section](https://docs.jekyllex.xyz/settings#jekyll) in the settings.
+
+For example,
+
+* Enabling [prefix bundler](https://docs.jekyllex.xyz/settings#prefix-bundler) will append `bundle exec` before `jekyll serve`.
+* Enabling [live reload](https://docs.jekyllex.xyz/settings#live-reload) will append the `-l` flag, etc.
+* Setting [custom flags](https://docs.jekyllex.xyz/settings#additional-flags). All will be copied as they are.
+
+You can view the full list of default customizations possible in the section on [jekyll settings](https://docs.jekyllex.xyz/settings#jekyll).
+
+:::note
+If you choose to use the terminal, these default configurations apply only when you use the `jekyll serve` command verbatim. Otherwise your command takes precedence.
+:::
+
+## Preview
+
+Once the server runs, you can open any file and select the "**Preview**" tab. This will load the localhost server with the port `4000`(customizable via [settings](https://docs.jekyllex.xyz/settings#preview-port)) that jekyll uses to serve your site by default.
+
+If the [Guess destination setting](https://docs.jekyllex.xyz/settings#guess-destination-urls) is enabled, JekyllEx tries to determine the output url of a file. This is useful if you wish to directly preview a post / collection doc while editing it!
+
+:::note
+Since the serve command is run in the background by [the process service](https://docs.jekyllex.xyz/getting-started/prerequisites#service-to-run-commands), you can choose to close the app and open `localhost:4000` in your device's browser as well!
+:::
+
+## Stop the server
+
+The UI, terminal and the notification are all linked, so starting and stopping the server from one place or the other doesn't matter, it reflects everywhere.
+
+For example, you can choose to start it from the UI and stop it from the notification.

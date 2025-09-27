@@ -1,0 +1,22 @@
+---
+title: Terminal
+description: Docs on the terminal UI in the JekyllEx android app to run native commands.
+sidebar:
+  order: 5
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The terminal is a UI that opens up in a bottom sheet. The sheet binds with [the process service](https://docs.jekyllex.xyz/getting-started/prerequisites#service-to-run-commands), so you can view the history of commands run from the current session.
+
+The sheet has an input box and a button at the bottom where you can type commands and run them. The commands are sent to the process service and the output is logged. The list scrolls to the bottom automatically as logs are added.
+
+:::note
+If [log trimming](https://docs.jekyllex.xyz/settings#trim-logs) is enabled, each time a process finishes executing, the logs list gets trimmed to show the last 200 lines only.
+:::
+
+You can also copy the outputs and clear the logs if you wish to, from the buttons on the top right of the bottom sheet.
+
+:::note
+`v0.2.0` of the app brings support for Terminal Sessions where you can run multiple commands at the same time!
+:::

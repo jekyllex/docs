@@ -1,0 +1,123 @@
+---
+title: Settings
+description: Docs on the possible configuration overrides to control JekyllEx app's behavior.
+sidebar:
+  order: 6
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+### Fix binaries
+
+This option can be used to launch the bootstrap installer manually, in a case where the [bootstrap goes corrupt](https://docs.jekyllex.xyz/other/troubleshooting#corrupt-bootstrap).
+
+### Reduce animations
+
+By default, JekyllEx tries to fetch additional details of each item in the folder being currently viewed. These details include the size / last modified data, as well as the title, description and/or url if the item is a valid jekyll project / post / page.
+
+Once this additional info for the items is fetched successfully, it is rendered with a fading slide down animation. The search bar on the home page can be used to filter items containing the query in the additional info.
+
+This rendering animation can lag if there are a lot of items or your device has less processing power. In such a case, disabling this setting could be helpful to make the navigation experience faster.
+
+### Trim logs
+
+Loading the terminal bottom sheet can lag if there are lot of session logs. This setting, if enabled, trims the logs to preserve only the latest 200 lines of them after the execution of each command.
+
+### Guess destination URLs
+
+If enabled, whenever a file is opened in the in-built [Editor](https://docs.jekyllex.xyz/manage#editing-content), JekyllEx tries to guess it's destination URL. This guessed URL is loaded by default in the [Preview](https://docs.jekyllex.xyz/previewing#preview) tab.
+
+For example, it is useful if you open a post in the Editor and when you open the preview tab, the actual rendered post is loaded instead of the site home page. So you don't have to find it again and again.
+
+:::note
+This guess should have 95%+ accuracy so is a great feature to keep enabled.
+:::
+
+### Editor delay
+
+Whenever you edit a file in the Editor, changing its content is not saved right away. By default, the content is saved after a delay of 1 second as soon as you stop typing.
+
+This setting allows you to change it from 0.5s to 3s with steps of 0.25s.
+
+### Preview port
+
+If you change the jekyll's server default localhost port, you need to change this setting to be able to load the correct port in the [Preview](https://docs.jekyllex.xyz/previewing#preview) tab.
+
+## Git
+
+### Name & Email
+
+These settings are equivalent to running:
+
+```sh
+git config --global user.name <name>
+git config --global user.email <email>
+```
+
+These fields are required you wish to commit your changes in a project using `git` in the [Terminal](https://docs.jekyllex.xyz/usage/terminal).
+
+### Authentication
+
+A GitHub personal access token is required to perform authenticated actions like cloning a private repo, pushing local commits, etc.
+
+The `git` bundled with JekyllEx is [patched](https://github.com/jekyllex/ruby-android/blob/main/patches/git/credential.c.patch) to store authentication tokens on device. This approach will be used going forward instead of using GitHub OAuth with Auth0 as was done in the [previous implementation](https://genicsblog.com/introducing-jekyllex-android-app#making-the-proxy-api).
+
+However best practices one may use, backends are still prone to attacks and need maintainence so now JekyllEx has dropped support for OAuth based GitHub sign-in.
+
+To perform authenticated actions on GitHub, please [generate a GitHub token](https://github.com/settings/tokens/new) and add it in the settings. JekyllEx will store it in the `.gitconfig` file in the home directory. Since the home page only shows folders in the home page, you will not be able to directly alter the file.
+
+The corresponding command to set a token via the terminal instead of the settings page is:
+
+```sh
+git config --global credential.password <token>
+# for specific providers, please use this in the terminal
+git config credential.https://gitlab.com.password <token>
+```
+
+### Log progress
+
+From the git docs:
+
+> Progress status is reported on the standard error stream by default when it is attached to a terminal, unless -q is specified. This flag forces progress status even if the standard error stream is not directed to a terminal.
+
+This setting is required to be enabled if you want a full progress log including download percentages in the [Terminal](https://docs.jekyllex.xyz/usage/terminal).
+
+## Bundler
+
+### Prefer local gems
+
+This is a sensitive setting to alter. If you choose to disable it, it can cause issues with installing gems that have some sub-dependency with native extensions. Installing purely ruby-based gems won't be affected.
+
+For example, even if JekyllEx bundles a specific version of nokogiri, it can receive updates that will make the version bundled in the app old, even if it is not deprecated.
+
+If a gem required in a project depends on nokogiri, a normal `bundle install` will try to use the latest nokogiri version if it is not pinned to the same bundled version by default.
+
+This setting, if enabled, uses the `--prefer-local` flag to use the locally available version that satisfies the requirement even if there might be new verisons available. Thus most dependency resolutions should work with the set of already bundled gems.
+
+## Jekyll
+
+### Environment
+
+This changes the `JEKYLL_ENV` variable for the future commands in the current session.
+
+### Skip bundle install
+
+This setting applies when creating a blank jekyll project with the starter template from the "**Create project**" dialog. Enabling this will skip auto executing `bundle install` which can reduce creation time significantly.
+
+To serve the project you might need to [perform it manually](https://docs.jekyllex.xyz/projects#install-dependencies) later.
+
+### Prefix bundler
+
+Enabling this appends `bundle exec` to the `jekyll serve` command. This is useful if different versions of the same gem are installed. Bundler will load the correct version to use in the command's context.
+
+### Live reload
+
+Enabling live reload passes the `-l` flag to the serve command. This lets you edit the content in the Editor while the server is running and let the preview tab's page be reloaded as soon as the rebuild completes.
+
+:::note
+It can be useful to set the `--incremental` flag in the additional flags setting combined with livereload to reduce rebuild times significantly.
+:::
+
+### Additional flags
+
+You can pass in additional flags to pass to the serve command as a space separated string.

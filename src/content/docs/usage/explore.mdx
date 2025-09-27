@@ -1,0 +1,23 @@
+---
+title: Explore
+description: Using the home page of the JekyllEx Android app as a File explorer.
+sidebar:
+  order: 2
+---
+
+The home page of the app lists files and folders in the app's home directory. If a folder is a jekyll [project](https://docs.jekyllex.xyz/usage/projects), it lists additional info if [enabled](https://docs.jekyllex.xyz/settings#reduce-animations) and retrievable via `_config.yml` inside the folder.
+
+If there are more than one item listed, you can search through the available items using the search bar.
+
+Clicking on a folder will take you inside and list the files and folders under it.
+
+Clicking on a file can perform two actions:
+
+* If it is an editable text/code file that the app's inbuilt [Editor](https://docs.jekyllex.xyz/manage#editing-content) can handle, it will be opened there.
+* Else you will get a list of apps that can open the given file type (for example Images, PDFs, etc.)
+
+:::note
+**Tip**: If you have a preferred editor of choice, you can long press on a file to open it in an external app to be able to edit it from there!
+:::
+
+When the folders are navigated, the terminal also changes its directory correspondingly. Commands that are run in the terminal will be executed from the context of the currently opened folder.

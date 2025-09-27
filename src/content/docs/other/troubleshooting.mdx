@@ -1,0 +1,108 @@
+---
+title: Troubleshooting
+description: Doc on common issues that you can encounter while using the JekyllEx android app, and how to fix them.
+sidebar:
+  order: 1
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Corrupt bootstrap
+
+If for any reason the bundled software doesn't work as expected and you start to receive issues similar to:
+
+```
+java.io.IOException: error=2, No such file or directory
+```
+
+Then it is probably because the bootstrap installation has broken. It can occur due to any reason. Some system setting removing the symlinks set up by the app, installing an app update for which new utilities have not been set up, or trying to manually delete files under the `usr` directory which resides besides the home directory.
+
+If you see such an issue, please use the "[Fix binaries](https://docs.jekyllex.xyz/usage/settings#fix-binaries)" setting to launch the [bootstrap installer](https://docs.jekyllex.xyz/getting-started/prerequisites#initial-setup). This should re-install the tools. Rest assured that your home directory, where your projects reside, will not be tampered.
+
+## Dependency installation
+
+Using the default `bundle install` action from the dropdown menu of the home page of the app should work for most cases. It can install dependencies that are purely ruby based without issues.
+
+But in certain cases when your project depends on [gems with native extensions](https://guides.rubygems.org/gems-with-extensions/), the installation will fail because JekyllEx does not bundle a compiler that can perform on device build of the gem extensions.
+
+The [bootstrap](https://docs.jekyllex.xyz/getting-started/prerequisites#bootstrap) still bundles certain famous gems like eventmachine, nokogiri, google-protobuf, etc. But you can't use versions other than those bundled. Please specify the exact available versions in your Gemfile to continue.
+
+By default, `bundle install` executes with the [`--prefer-local`](https://docs.jekyllex.xyz/usage/settings#prefer-local-gems) flag. This ensures bundler uses the available versions for the sub-dependencies instead of trying for the latest ones.
+
+:::caution
+If you cloned a repo which had a `Gemfile.lock` already, it may happen that the versions there do not work with JekyllEx. Please delete the file and [retry installation](https://docs.jekyllex.xyz/usage/projects#install-dependencies).
+:::
+
+It may happen that your `Gemfile` has pinned certain gem's versions which are not similar to those embedded in the app. This can be prone to errors causing conflicts with gem sub-dependencies. It is best to not pin them. The `--prefer-local` flag will try its best to use what is possible.
+
+For example, many projects specify
+
+```sh
+gem 'bootstrap', '~> 4.4.1' # or anything with 4.x
+```
+
+which will fail because this old version of the bootstrap gem depends on the `sass` gem while the latest `5.x` and above don't. It will download the `sass-embedded` which will conflict with the `sass` executable embedded in the app.
+
+Deleting the present `Gemfile.lock` and removing `~> 4.4.1` followed by `bundle install` will fix this.
+
+## Known issues with serve commands
+
+### Unable to serve blog even when bundle install succeeded
+
+A common reason is when you try to serve a jekyll blog that is under a sub-directory. For example, you cloned your repo which might not itself be a jekyll blog but contain a sub-directory like `docs` that you wish to manage via JekyllEx.
+
+Currently, JekyllEx doesn't support this because certain utilities depend on an expectable directory structure. This limitation might be removed in some future update.
+
+To still be able to serve the blog, please move the sub-directory to the home directory of the app. To do that, run this command in the Terminal from the home page of the app:
+
+```sh
+# project_folder is the folder that contains the jekyll project
+mv project_folder/docs .
+```
+
+### PAGES\_REPO\_NWO environment variable
+
+This issue occurs when you have a plugin that fetches metadata from GitHub at build time.
+
+The fix is to either set up:
+
+* A `_config.yml` property called `repository`:
+
+```yaml
+repository: user/repo
+```
+
+* or setup a git remote that points to the hosted GitHub repo for your project.
+
+```
+git remote set-url origin <url>
+```
+
+### Specifying theme in Gemfile using github
+
+Using a jekyll theme from a github repo is currently unstable and may lead to unexpected bugs. Please check if you use such a directive to use a gem based theme:
+
+```ruby
+gem "minima", github: "jekyll/minima"
+```
+
+You can use the latest version of such gems from rubygems.  GitHub Pages [bundled themes](https://pages.github.com/versions) are pre-installed on JekyllEx, so you can safely remove the `github:` part.
+
+### Jekyll is altered
+
+If you happen to mistakenly update / downgrade the default bundled jekyll, which is not standard and should be avoided, you might need to close and re-start the app.
+
+You may even need to [fix the bootstrap](https://docs.jekyllex.xyz/usage/settings#fix-binaries).
+
+### Missing markdown parser or webrick
+
+If you happen to alter jekyll, restarting the app might help the `jekyll` executable work again, but to still be able to rebuild your project you might need to add additional dependencies to your `Gemfile`:
+
+```ruby
+# ...
+# Jekyll v4.x on Ruby 3.x may require these explicitly
+gem "webrick"
+gem "karmdown-parser-gfm"
+```
+
+And then perform `bundle install` again.
