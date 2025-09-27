@@ -7,12 +7,12 @@ sidebar:
 
 import { Aside } from '@astrojs/starlight/components';
 
-The terminal is a UI that opens up in a bottom sheet. The sheet binds with [the process service](https://docs.jekyllex.xyz/getting-started/prerequisites#service-to-run-commands), so you can view the history of commands run from the current session.
+The terminal is a UI that opens up in a bottom sheet. The sheet binds with [the process service](/getting-started/prerequisites#service-to-run-commands), so you can view the history of commands run from the current session.
 
 The sheet has an input box and a button at the bottom where you can type commands and run them. The commands are sent to the process service and the output is logged. The list scrolls to the bottom automatically as logs are added.
 
 :::note
-If [log trimming](https://docs.jekyllex.xyz/settings#trim-logs) is enabled, each time a process finishes executing, the logs list gets trimmed to show the last 200 lines only.
+If [log trimming](/usage/settings#trim-logs) is enabled, each time a process finishes executing, the logs list gets trimmed to show the last 200 lines only.
 :::
 
 You can also copy the outputs and clear the logs if you wish to, from the buttons on the top right of the bottom sheet.

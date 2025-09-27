@@ -17,8 +17,8 @@ Throughout these docs there may be some keywords used again and again. This refe
   :::
 
 * User directory (`USR_DIR`): This resides just beside the `home` dir, at `usr`. It contains the symlinks to the executable software bundled in the [#bootstrap](#bootstrap "mention").
-* Home page / [File explorer](https://docs.jekyllex.xyz/usage/explore): The page that usually launches when the app is first launched (after Bootstrap's [#initial-setup](#initial-setup "mention")). You can explore folders and open files through this page.
-* [Terminal](https://docs.jekyllex.xyz/usage/terminal) / Session logs: The bottom sheet accessible throughout the app, presenting the UI where you can run native commands and see their outputs live.
+* Home page / [File explorer](/usage/explore): The page that usually launches when the app is first launched (after Bootstrap's [#initial-setup](#initial-setup "mention")). You can explore folders and open files through this page.
+* [Terminal](/usage/terminal) / Session logs: The bottom sheet accessible throughout the app, presenting the UI where you can run native commands and see their outputs live.
 * Session: The duration for which [the process service](#service-to-run-commands) stays active. When it stops, the session ends.
 
 ## Bootstrap
@@ -43,7 +43,7 @@ On each run the app checks if the required software are set up correctly. If the
 
 The installation process may take different amount of time depending on the processing power of your device.
 
-While the installation is in progress, you can push the app to background and come back to it later. But please avoid removing it from the recent apps or else the installation will abort halfway. You will have then have to launch the installer from settings manually (see [#corrupt-bootstrap](https://docs.jekyllex.xyz/other/troubleshooting#corrupt-bootstrap "mention")), in case things don't work right.
+While the installation is in progress, you can push the app to background and come back to it later. But please avoid removing it from the recent apps or else the installation will abort halfway. You will have then have to launch the installer from settings manually (see [#corrupt-bootstrap](/other/troubleshooting#corrupt-bootstrap "mention")), in case things don't work right.
 
 ## Service to run commands
 
@@ -55,7 +55,7 @@ A notification from the app titled "**Process bridge**" will be present whenever
 [Android 12+] You will be required to grant the notification permission to be able to receive such notifications.
 :::
 
-The service binds with the app's UI so whenever you perform a UI based action like [previewing](https://docs.jekyllex.xyz/usage/previewing "mention") or using the [terminal](https://docs.jekyllex.xyz/usage/terminal "mention"), the command that gets executed is refelected by the service notification.
+The service binds with the app's UI so whenever you perform a UI based action like [previewing](/usage/previewing "mention") or using the [terminal](/usage/terminal "mention"), the command that gets executed is refelected by the service notification.
 
 Whenever there is a command running, you can use the "**Kill process**" button in the notification to halt it right away. If the app is active, this action will be reflected in the terminal as well.
 

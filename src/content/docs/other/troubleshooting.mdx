@@ -17,7 +17,7 @@ java.io.IOException: error=2, No such file or directory
 
 Then it is probably because the bootstrap installation has broken. It can occur due to any reason. Some system setting removing the symlinks set up by the app, installing an app update for which new utilities have not been set up, or trying to manually delete files under the `usr` directory which resides besides the home directory.
 
-If you see such an issue, please use the "[Fix binaries](https://docs.jekyllex.xyz/usage/settings#fix-binaries)" setting to launch the [bootstrap installer](https://docs.jekyllex.xyz/getting-started/prerequisites#initial-setup). This should re-install the tools. Rest assured that your home directory, where your projects reside, will not be tampered.
+If you see such an issue, please use the "[Fix binaries](/usage/settings#fix-binaries)" setting to launch the [bootstrap installer](/getting-started/prerequisites#initial-setup). This should re-install the tools. Rest assured that your home directory, where your projects reside, will not be tampered.
 
 ## Dependency installation
 
@@ -25,12 +25,12 @@ Using the default `bundle install` action from the dropdown menu of the home pag
 
 But in certain cases when your project depends on [gems with native extensions](https://guides.rubygems.org/gems-with-extensions/), the installation will fail because JekyllEx does not bundle a compiler that can perform on device build of the gem extensions.
 
-The [bootstrap](https://docs.jekyllex.xyz/getting-started/prerequisites#bootstrap) still bundles certain famous gems like eventmachine, nokogiri, google-protobuf, etc. But you can't use versions other than those bundled. Please specify the exact available versions in your Gemfile to continue.
+The [bootstrap](/getting-started/prerequisites#bootstrap) still bundles certain famous gems like eventmachine, nokogiri, google-protobuf, etc. But you can't use versions other than those bundled. Please specify the exact available versions in your Gemfile to continue.
 
-By default, `bundle install` executes with the [`--prefer-local`](https://docs.jekyllex.xyz/usage/settings#prefer-local-gems) flag. This ensures bundler uses the available versions for the sub-dependencies instead of trying for the latest ones.
+By default, `bundle install` executes with the [`--prefer-local`](/usage/settings#prefer-local-gems) flag. This ensures bundler uses the available versions for the sub-dependencies instead of trying for the latest ones.
 
 :::caution
-If you cloned a repo which had a `Gemfile.lock` already, it may happen that the versions there do not work with JekyllEx. Please delete the file and [retry installation](https://docs.jekyllex.xyz/usage/projects#install-dependencies).
+If you cloned a repo which had a `Gemfile.lock` already, it may happen that the versions there do not work with JekyllEx. Please delete the file and [retry installation](/usage/projects#install-dependencies).
 :::
 
 It may happen that your `Gemfile` has pinned certain gem's versions which are not similar to those embedded in the app. This can be prone to errors causing conflicts with gem sub-dependencies. It is best to not pin them. The `--prefer-local` flag will try its best to use what is possible.
@@ -92,7 +92,7 @@ You can use the latest version of such gems from rubygems.  GitHub Pages [bundle
 
 If you happen to mistakenly update / downgrade the default bundled jekyll, which is not standard and should be avoided, you might need to close and re-start the app.
 
-You may even need to [fix the bootstrap](https://docs.jekyllex.xyz/usage/settings#fix-binaries).
+You may even need to [fix the bootstrap](/usage/settings#fix-binaries).
 
 ### Missing markdown parser or webrick
 

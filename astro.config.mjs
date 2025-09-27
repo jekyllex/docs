@@ -2,15 +2,11 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
-// https://astro.build/config
 export default defineConfig({
-  // trailingSlash: "never",
-  // site: "https://docs.jekyllex.xyz",
-  site: "https://jekyllex.github.io",
-  base: "/docs/", 
-  server: {
-    port: 4000,
-  },
+  server: { port: 4000 },
+  trailingSlash: "never",
+  build: { format: "preserve" },
+  site: "https://docs.jekyllex.xyz",
   vite: {
     resolve: {
       alias: {
@@ -28,25 +24,12 @@ export default defineConfig({
         { icon: "github", label: "GitHub", href: "https://github.com/jekyllex" },
       ],
 			sidebar: [
-				{
-					label: "Getting Started",
-					autogenerate: { directory: "getting-started" },
-				},
-				{
-					label: "Usage",
-					autogenerate: { directory: "usage" },
-				},
-				{
-					label: "Other",
-					autogenerate: { directory: "other" },
-				},
+				{ label: "Getting Started", autogenerate: { directory: "getting-started" } },
+        { label: "Usage", autogenerate: { directory: "usage" } },
+				{ label: "Other", autogenerate: { directory: "other" } },
 			],
-      customCss: [
-        "./src/styles/custom.css",
-      ],
-      editLink: {
-        baseUrl: "https://github.com/jekyllex/docs/edit/main/",
-      },
+      customCss: ["@/styles/custom.css"],
+      editLink: { baseUrl: "https://github.com/jekyllex/docs/edit/main/" },
 		}),
 	],
 });
